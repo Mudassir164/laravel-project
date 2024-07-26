@@ -1,0 +1,44 @@
+services:
+  laravel:
+    image: play-active-app:latest
+   # image: 8ddaabdf3f2d
+    container_name: laravel 
+   # build:
+   #   context: .
+   #   dockerfile: Dockerfile.laravel
+    env_file:
+      - .env
+    ports:
+      - 80:80
+    networks:
+      - laravel-network
+   # volumes:
+    #  - laravel-app:/var/www/html
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    container_name: ${DB_HOST}
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306"
+    networks:
+      - laravel-network
+    volumes:
+      - laravel-db:/var/lib/mysql
+    #restart: always
+
+networks:
+  laravel-network:
+
+volumes:
+  laravel-db: 
+  laravel-app: 

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  pac-api:
+    build: .
+    container_name: pac-api
+    ports:
+      - 8081:80
+#    volumes:
+#      - .:/var/www/html
+#    network_mode: host
+    restart: always
+    networks:
+      - pac
+networks:
+  pac:
+    external: true
